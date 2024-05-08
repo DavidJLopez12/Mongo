@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JTextField;
 
 import controllers.ControladorCcaa;
+import controllers.ControladorProvincia;
 import entities.Ccaa;
 import entities.Provincia;
 
@@ -117,6 +118,12 @@ public class PanelProvincia extends JPanel {
 		panel.add(btnCcaa, gbc_btnCcaa);
 		
 		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			guardar(p);
+			}
+		});
 		GridBagConstraints gbc_btnGuardar = new GridBagConstraints();
 		gbc_btnGuardar.insets = new Insets(0, 0, 0, 5);
 		gbc_btnGuardar.gridx = 2;
@@ -162,5 +169,13 @@ public class PanelProvincia extends JPanel {
                 (Toolkit.getDefaultToolkit().getScreenSize().height)/2 - dialogo.getHeight()/2);
         // Muestro el di�logo en pantalla
         dialogo.setVisible(true);
+    }
+	
+	public void guardar(Provincia p) {
+        p.setCode(jtfCode.getText());
+        p.setLabel(jtfLabel.getText());
+        Ccaa ca = (Ccaa) this.jcbCcaa.getSelectedItem();
+        p.setParent_code(ca.getCode());
+        ControladorProvincia.updateDocument(p.getCode(),p.getLabel(),p.getParent_code());
     }
 }

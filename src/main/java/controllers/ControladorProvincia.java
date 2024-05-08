@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -12,6 +13,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.UpdateResult;
 
 import entities.Provincia;
 
@@ -62,6 +65,21 @@ public class ControladorProvincia {
 	        }
 	        
 	        return allCcaa;
+	    }
+	 
+	 public static void updateDocument (String code,String pr, String string) {
+	        try {
+	            Document query = new Document().append("code",  code);
+	            Bson update = Updates.combine(Updates.set("label",pr));
+
+	            UpdateResult result = col.updateOne(query, update);
+	            System.out.println("Modificados: " + result.getModifiedCount());
+
+	        }
+	        catch (Exception ex) {
+	            ex.printStackTrace();
+	        }
+	        
 	    }
 	 
 //	 private static Ccaa documentToCcaa(Document doc) {
